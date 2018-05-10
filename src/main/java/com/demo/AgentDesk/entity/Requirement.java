@@ -11,16 +11,20 @@ import java.math.BigDecimal;
 /**
  * Created by ashutoshpandey on 08/05/18.
  */
+/*
 @Entity
 @Table(name = "property")
+*/
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class Requirement {
 
+/*
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+*/
     @JsonIgnore
     private long id;
 

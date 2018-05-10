@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +16,7 @@ import java.util.List;
  * Created by ashutoshpandey on 08/05/18.
  */
 @Repository
-@Transactional
-public interface PropertyRepository extends JpaRepository<Property, Long> {
+public interface PropertyRepository extends PagingAndSortingRepository<Property, Long> {
 
     Property findByExternalId(String externalId);
 
@@ -40,5 +40,17 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     List<PropertyDistance> listAllPropertyInRadius(double lat, double lon,
                                                    double minLat, double maxLat, double minLon, double maxLon,
                                                    double radius, double earthRadius);
+
+    //https://www.movable-type.co.uk/scripts/latlong-db.html
+    //Can write it here also but handling in code
+
+    List<PropertyDistance> listAllPropertyInRadiusAndConditions(
+            double lat, double lon,
+            double minLat, double maxLat,
+            double minLon, double maxLon,
+            double radius, double earthRadius,
+            double minPrice, double maxPrice,
+            int minBedroom, int maxBedroom,
+            int minBathroom, int maxBathroom );
 
 }

@@ -1,5 +1,7 @@
 package com.demo.AgentDesk.util;
 
+import java.math.BigDecimal;
+
 /**
  * Created by ashutoshpandey on 09/05/18.
  */
@@ -11,4 +13,11 @@ public interface Constants {
 
     //in kilometers
     double DEFAULT_DISTANCE = 10;
+
+    BigDecimal ONE_HUNDRED = new BigDecimal(100);
+
+    BigDecimal TWENTY_FIVE = new BigDecimal(25);
+
+    Integer BEDROOM_OFFSET = 2;
+
 }

@@ -19,15 +19,40 @@ import java.sql.Timestamp;
 @Entity
 //Source is https://www.movable-type.co.uk/scripts/latlong-db.html
 @org.hibernate.annotations.NamedQueries({
+
+/*
         @org.hibernate.annotations.NamedQuery(name = "Property.listAllPropertyInRadius",
+                query="SELECT new com.demo.AgentDesk.dto.PropertyDistance( p.id, " +
+                        "p.externalId, p.latitude, p.longitude, p.price, p.numberOfBedrooms, p.numberOfBathrooms, " +
+                        "acos(sin(?1)*sin(radians(p.latitude)) + cos(?1)*cos(radians(p.latitude))*cos(radians(p.longitude)-?2)) * ?8 As distance )" +
+                        "FROM Property p " +
+                        "WHERE  p.latitude BETWEEN ?3 and ?4 " +
+                        "AND p.longitude BETWEEN ?5 And ?6 " +
+                        "AND acos(sin(?1)*sin(radians(p.latitude)) + cos(?1)*cos(radians(p.latitude))*cos(radians(p.longitude)-?2)) * ?8 < ?7 " +
+                        "ORDER by distance"),
+*/
+
+        @org.hibernate.annotations.NamedQuery(name = "Property.listAllPropertyInRadius",
+                query="SELECT new com.demo.AgentDesk.dto.PropertyDistance( p.id, " +
+                        "p.externalId, p.latitude, p.longitude, p.price, p.numberOfBedrooms, p.numberOfBathrooms, " +
+                        "acos(sin(?1)*sin(radians(p.latitude)) + cos(?1)*cos(radians(p.latitude))*cos(radians(p.longitude)-?2)) * ?8 As distance )" +
+                        "FROM Property p " +
+                        "WHERE  p.latitude BETWEEN ?3 and ?4 " +
+                        "AND p.longitude BETWEEN ?5 And ?6 " +
+                        "AND acos(sin(?1)*sin(radians(p.latitude)) + cos(?1)*cos(radians(p.latitude))*cos(radians(p.longitude)-?2)) * ?8 < ?7 " ),
+        @org.hibernate.annotations.NamedQuery(name = "Property.listAllPropertyInRadiusAndConditions",
                 query="SELECT new com.demo.AgentDesk.dto.PropertyDistance( p.id, " +
                         "p.externalId, p.latitude, p.longitude, p.price, p.numberOfBedrooms, p.numberOfBathrooms, " +
                         "acos(sin(:lat)*sin(radians(p.latitude)) + cos(:lat)*cos(radians(p.latitude))*cos(radians(p.longitude)-:lon)) * :earthRadius As distance )" +
                         "FROM Property p " +
-                        "WHERE  p.latitude BETWEEN :minLat and :maxLat " +
-                        "AND p.longitude BETWEEN :minLon And :maxLon " +
+                        "WHERE  p.latitude BETWEEN :minLat AND :maxLat " +
+                        "AND p.longitude BETWEEN :minLon AND :maxLon " +
+                        "AND p.price between :minPrice AND :maxPrice " +
+                        "AND p.numberOfBedrooms between :minBedroom AND :maxBedroom " +
+                        "AND p.numberOfBathrooms between :minBathroom AND :maxBathroom " +
                         "AND acos(sin(:lat)*sin(radians(p.latitude)) + cos(:lat)*cos(radians(p.latitude))*cos(radians(p.longitude)-:lon)) * :earthRadius < :radius " +
                         "ORDER by distance")
+
 }
 )
 @Table(name = "property")
@@ -35,6 +60,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
+@ToString
 public class Property {
 
     @Id
@@ -79,6 +105,5 @@ public class Property {
     @UpdateTimestamp
     @Getter @Setter
     private Timestamp updatedAt;
-
 
 }

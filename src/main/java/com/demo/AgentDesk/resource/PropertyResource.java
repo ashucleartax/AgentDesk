@@ -1,6 +1,9 @@
 package com.demo.AgentDesk.resource;
 
 import com.demo.AgentDesk.entity.Property;
+import com.demo.AgentDesk.service.PropertyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,29 +20,34 @@ import java.util.List;
 @RequestMapping("/property")
 public class PropertyResource {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Property>> findAll(){
-        return null;
+    @Autowired
+    private PropertyService propertyService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Iterable<Property>> findAll(){
+        return new ResponseEntity<Iterable<Property>>(propertyService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{propertyId}", method = RequestMethod.GET)
     public ResponseEntity<Property> find(@PathParam("propertyId") String propertyId){
-        return null;
+        return new ResponseEntity<Property>(propertyService.find(propertyId), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Property> create(@RequestBody Property property){
-        return null;
+        return new ResponseEntity<Property>(propertyService.create(property), HttpStatus.CREATED);
+
     }
 
     @RequestMapping(value = "/{propertyId}", method = RequestMethod.PUT)
     public ResponseEntity<Property> update(@PathParam("propertyId") String propertyId, @RequestBody Property property){
-        return null;
+        return new ResponseEntity<Property>(propertyService.update(propertyId, property), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/{propertyId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathParam("propertyId") String propertyId){
-        return null;
+        propertyService.delete(propertyId);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 
