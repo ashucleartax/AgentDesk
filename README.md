@@ -5,11 +5,8 @@ Run it as Spring boot application and access http://localhost:8080/swagger-ui.ht
 
 # Build and run
 `git clone git@github.com:ashucleartax/AgentDesk.git
-
 cd AgentDesk
-
-mvn spring-boot:run
-`
+mvn spring-boot:run`
 
 From browser access 
 http://localhost:8080/swagger-ui.html
